@@ -1,0 +1,77 @@
+import java.util.*;
+
+public class ResumeKeywordAnalyzer {
+
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("===== RESUME KEYWORD ANALYZER =====");
+
+        System.out.print("\nEnter resume skills: ");
+        String resumeInput = scanner.nextLine().toLowerCase();
+
+        System.out.print("Enter job required skills: ");
+        String jobInput = scanner.nextLine().toLowerCase();
+
+        Set<String> resumeSkills =
+                new HashSet<>(Arrays.asList(resumeInput.split(",")));
+
+        Set<String> jobSkills =
+                new HashSet<>(Arrays.asList(jobInput.split(",")));
+
+        Set<String> matching =
+                new HashSet<>(resumeSkills);
+
+        matching.retainAll(jobSkills);
+
+        Set<String> missing =
+                new HashSet<>(jobSkills);
+
+        missing.removeAll(resumeSkills);
+
+        System.out.println("\n===== ANALYSIS =====");
+
+        System.out.println("\nMatching Skills:");
+
+        for (String skill : matching) {
+            System.out.println("✓ " + skill.trim());
+        }
+
+        System.out.println("\nMissing Skills:");
+
+        for (String skill : missing) {
+            System.out.println("✗ " + skill.trim());
+        }
+
+        double percentage =
+                (matching.size() * 100.0) / jobSkills.size();
+
+        System.out.printf(
+                "\nSkill Match: %.2f%%%n",
+                percentage
+        );
+
+        scanner.close();
+    }
+}
+
+OUTPUT:
+===== RESUME KEYWORD ANALYZER =====
+
+Enter resume skills: Java,SQL,Spring Boot,Git
+Enter job required skills: Java,SQL,Spring Boot,Docker,AWS,Git
+
+===== ANALYSIS =====
+
+Matching Skills:
+✓ java
+✓ sql
+✓ spring boot
+✓ git
+
+Missing Skills:
+✗ docker
+✗ aws
+
+Skill Match: 66.67%
